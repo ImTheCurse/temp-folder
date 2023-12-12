@@ -1,27 +1,28 @@
 #pragma once
+#include <chrono>
 #include <optional>
 #include <string>
-#include <chrono>
-
 
 class TempFolder {
 public:
-  TempFolder(const std::string& folderName, const std::chrono::seconds& duration);
-  TempFolder(const std::string& folderName, const std::chrono::minutes& duration);
-  TempFolder(const std::string& folderName, const std::chrono::hours& duration);
-  TempFolder(const std::string& folderName);
-  ~TempFolder(){}
+  TempFolder(const std::string &folderName,
+             const std::chrono::seconds &duration);
+  TempFolder(const std::string &folderName,
+             const std::chrono::minutes &duration);
+  TempFolder(const std::string &folderName, const std::chrono::hours &duration);
+  TempFolder(const std::string &folderName);
+  ~TempFolder() {}
 
   void openNewTempFolder();
   void notifyOfNewFile() const;
   void notifyDeletedFile() const;
   void deleteTempFolder();
   void addMoreTime();
-  bool isFolderChanged(std::size_t currentNumOfFiles) const;
+  bool wasFileAdded();
+  bool wasFileRemoved();
 
   const long getTimeLeft() const;
-  
-  
+  std::size_t getNumOfFilesInFolder() const;
 
 private:
   std::string _folderName;
@@ -30,8 +31,8 @@ private:
   std::optional<std::chrono::minutes> _durInMin;
   std::optional<std::chrono::hours> _durInHours;
 
-  std::size_t getNumOfFilesInFolder() const;
+  void incFileCount();
+  void decFileCount();
   void setEndTime();
   std::chrono::time_point<std::chrono::system_clock> _startTime, _endTime;
-
 };

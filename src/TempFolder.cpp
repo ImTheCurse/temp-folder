@@ -43,8 +43,6 @@ void TempFolder::openNewTempFolder() {
   std::string qm = "\"";
   sucess_created.append(ctime(&tt) + qm);
 
-  // system("notify-send TempFolder \"Created sucssesfuly temporary
-  // directory.\"" + str.c_str());
   system(sucess_created.c_str());
 }
 
@@ -62,45 +60,51 @@ std::size_t TempFolder::getNumOfFilesInFolder() const {
 
   using std::filesystem::directory_iterator;
   return std::distance(directory_iterator(_folderName), directory_iterator{});
-} 
-
-bool TempFolder::isFolderChanged(std::size_t currentNumOfFiles)const {
-  if(currentNumOfFiles != getNumOfFilesInFolder())
-    return true;
-
-  return false;
-
 }
 
-
-void TempFolder::notifyOfNewFile() const {  
-  system("notify-send TempFolder \"Added new file to temporary directory.\""); 
-
+void TempFolder::notifyOfNewFile() const {
+  system("notify-send TempFolder \"Added new file to temporary directory.\"");
 }
-
 
 void TempFolder::notifyDeletedFile() const {
-  system("notify-send TempFolder \"Deleted file from temporary directory.\""); 
- 
+  system("notify-send TempFolder \"Deleted file from temporary directory.\"");
 }
 
-void TempFolder::deleteTempFolder(){
+void TempFolder::deleteTempFolder() {
   namespace fs = std::filesystem;
 
   fs::remove_all(_folderName);
-  system("notify-send TempFolder \"Deleted temporary file directory.\""); 
+  system("notify-send TempFolder \"Deleted temporary file directory.\"");
 }
-
 
 const long TempFolder::getTimeLeft() const {
-  return std::chrono::duration_cast<std::chrono::seconds>(_endTime - std::chrono::system_clock::now()).count();
+  return std::chrono::duration_cast<std::chrono::seconds>(
+             _endTime - std::chrono::system_clock::now())
+      .count();
 }
 
+void TempFolder::incFileCount() { _numOfFiles++; }
 
+void TempFolder::decFileCount() { _numOfFiles--; }
 
+bool TempFolder::wasFileAdded() {
+  using std::filesystem::directory_iterator;
+  long currentFileCount =
+      std::distance(directory_iterator(_folderName), directory_iterator{});
+  if (currentFileCount > _numOfFiles) {
+    incFileCount();
+    return true;
+  }
+  return false;
+}
 
-
-
-
-
-
+bool TempFolder::wasFileRemoved() {
+  using std::filesystem::directory_iterator;
+  long currentFileCount =
+      std::distance(directory_iterator(_folderName), directory_iterator{});
+  if (currentFileCount < _numOfFiles) {
+    decFileCount();
+    return true;
+  }
+  return false;
+}

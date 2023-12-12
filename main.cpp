@@ -1,18 +1,26 @@
 #include "src/TempFolder.hpp"
 #include <chrono>
-#include <iostream>
 #include <filesystem>
-int main(){
+#include <thread>
 
-  TempFolder tf("temp",std::chrono::minutes(5));
+int main() {
+
+  TempFolder tf("temp", std::chrono::minutes(5));
+  const std::filesystem::path filePath = "temp";
 
   tf.openNewTempFolder();
-  std::cout<<tf.getTimeLeft()<<std::endl;
-  /*
-  while(tf.getTimeLeft() > 0){
+  while (tf.getTimeLeft() > 0) {
 
+    if (tf.wasFileAdded()) {
+      tf.notifyOfNewFile();
+    }
+    if (tf.wasFileRemoved()) {
+      tf.notifyDeletedFile();
+    }
+
+    std::this_thread::sleep_for(std::chrono::seconds(30));
   }
-*/
+  tf.deleteTempFolder();
 
   return 0;
 }
