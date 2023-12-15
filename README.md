@@ -13,6 +13,8 @@ you will need to manually remove the temporary folder yourself.
 `git clone https://github.com/ImTheCurse/temp-folder.git`<br>
  `cd temp-folder`<br>
  `sh install.sh`<br>
+ `cd /usr/local/bin/temp-folder`<br>
+ `sudo make all`<br><br>
  if you are using regular bash shell or a diffrent shell, change ```.zshrc``` to shell of choice inside ```install.sh```
 
 ### 🚀 Running the Program
