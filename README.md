@@ -1,7 +1,7 @@
 # temp-folder
-:file_folder: :hourglass: temp-folder is a linux timed, automatically closed folder applicaton to store temporary files that are ment to be disposed,   
+:file_folder: :hourglass: temp-folder is a linux timed, automatically closed folder applicaton to store temporary files that can be disposed,<br>
 :bell: it has notifications for folder changes(insertion, deletion).<br>
-:no_mobile_phones: temp-folder is a no-dependancy program, it only uses STL of c++.
+:no_entry_sign: 🔖 temp-folder is a no-dependancy program, it only uses STL of c++.
 
 ### Limitation
 The software runs in the background as long as the PC is on, meaning that if the program is still runing and the PC is turned off, 
