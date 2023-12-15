@@ -3,18 +3,19 @@
 :bell: it has notifications for folder changes(insertion, deletion).<br>
 :no_entry_sign: 🔖 temp-folder is a no-dependancy program, it only uses STL of c++.
 
-### Limitation
+### 🎫 Limitation
 The software runs in the background as long as the PC is on, meaning that if the program is still runing and the PC is turned off, 
 you will need to manually remove the temporary folder yourself.
 
 
-### Installation
+### 📥 Installation
 
 `git clone https://github.com/ImTheCurse/temp-folder.git`<br>
  `cd temp-folder`<br>
  `sh install.sh`<br>
+ if you are using regular bash shell or a diffrent shell, change ```.zshrc``` to shell of choice inside ```install.sh```
 
-### Running the Program
+### 🚀 Running the Program
 ```
 usage:
 -n           : Name of temporary folder. | string |
